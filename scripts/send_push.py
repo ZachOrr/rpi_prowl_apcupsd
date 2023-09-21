@@ -1,10 +1,11 @@
-import prowlpy
+import apprise
 import os
 
 def send_push(title, message):
-    apikey = os.environ['PROWL_API']
-    p = prowlpy.Prowl(apikey)
+    apobj = apprise.Apprise()
+    apuri = os.environ['APPRISE_URI']
+    apobj.add(apuri)
     try:
-        p.add('apcupsd',title,message, 1, None, None)
-    except Exception,msg:
-        print msg
+        apobj.notify(body=message,title=title,)
+    except Exception(e):
+        print(e)
